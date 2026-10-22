@@ -30,16 +30,17 @@ st.markdown(
 )
 
 # Filter tahun
-st.sidebar.header("Filter Data")
+df["year"] = df["yr"].map({0: 2011, 1: 2012})
 
-year_options = sorted(df["yr"].unique().tolist())
+year_options = sorted(df["year"].dropna().unique().tolist())
+
 selected_years = st.sidebar.multiselect(
     "Pilih tahun",
     options=year_options,
     default=year_options
 )
 
-filtered_df = df[df["yr"].isin(selected_years)]
+filtered_df = df[df["year"].isin(selected_years)]
 
 if filtered_df.empty:
     st.warning("Tidak ada data untuk pilihan filter ini.")
